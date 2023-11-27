@@ -1,3 +1,8 @@
+provider "aws" {
+  access_key = "AKIAT2BQL2LSCI2YWW7K"
+  secret_key = "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"
+  region = "us-east-2"
+}
 resource "aws_iam_user" "Admin-user" {
   name = "lucky"
   tags = {
