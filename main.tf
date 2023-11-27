@@ -1,28 +1,26 @@
-terraform {
-  required_providers {
-    local = {
-      source = "hashicorp/local"
-      version = "~> 2.2.3"
-    }
+resource "aws_iam_user" "Admin-user" {
+  name = "lucky"
+  tags = {
+    description = "Tech Team Lead"
   }
 }
-resource "local_file" "pet" {
-filename = var.filename[count.index]
-content = "i love you nancy ${random_pet.petname.id}"
-depends_on = [ random_pet.petname ]
-content_base64 = null
-file_permission = "700" 
-source = null
-count = length(var.filename)
-lifecycle {
-  create_before_destroy = true
+resource "aws_iam_policy" "Admin-user" {
+  name   = "AdminUsers"
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "1234567890",
+            "Effect": "Allow",
+            "Action": "*",
+            "Resource": "*"
+        }
+    ]
 }
+EOF
 }
-resource "random_pet" "petname" {
-  prefix = var.prefix
-  length = var.length
-  separator = var.separator
-}
-output "petname" {
-  value = random_pet.petname.id
+resource "aws_iam_user_policy_attachment" "lucky-admin-access" {
+  user       = aws_iam_user.Admin-user.name
+  policy_arn = aws_iam_policy.Admin-user.arn
 }
