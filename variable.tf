@@ -1,5 +1,5 @@
 variable "filename" {
-  default = "pets.txt"
+  default = ["pets.txt", "cats.txt", "dogs.txt", "saddam-sam.txt"]
 }
 variable "prefix" {
   default = "saddam"
